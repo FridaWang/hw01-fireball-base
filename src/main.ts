@@ -14,7 +14,7 @@ import Cube from './geometry/cube';
 const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
-  color: [ 242, 207, 33, 255 ], // RGB with alpha
+  color: [ 242, 206, 33, 255 ], // RGB with alpha
   intensity: 2.2,
   freq: 2,
 };
@@ -22,7 +22,7 @@ const controls = {
 let icosphere: Icosphere;
 let square: Square;
 let prevTesselations: number = 5;
-let preGeoColor: number[] = [ 242, 207, 33, 255 ];
+let preGeoColor: number[] = [ 242, 206, 33, 255 ];
 let cube: Cube;
 let time: number = 0;
 let prevPerlinScale: number = 1.8;

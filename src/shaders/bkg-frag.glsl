@@ -24,6 +24,21 @@ in vec4 fs_Col;
 out vec4 out_Col; // This is the final output color that you will see on your
                   // screen for the pixel that is currently being processed.
 
+float GetBias(float time, float bias)
+{
+  return (time / ((((1.0/bias) - 2.0)*(1.0 - time))+1.0));
+}
+
+float GetGain(float time, float gain)
+{
+  if(time < 0.5) {
+    return GetBias(time * 2.0,gain)/2.0;
+  }
+  else {
+    return GetBias(time * 2.0 - 1.0,1.0 - gain)/2.0 + 0.5;
+  }
+}
+
 void main()
 {
     // Material base color (before shading)
@@ -31,7 +46,7 @@ void main()
     vec3 tmpPos = fs_Pos.xyz;
     float scale = 6.0;
     float freq = 0.01;
-    tmpPos += sin(freq * u_Time) * scale * normalize(fs_Nor.xyz);
+    tmpPos += GetGain(abs(sin(freq * u_Time)), 0.3) * scale * normalize(fs_Nor.xyz);
 
     float dis = length(vec3(tmpPos - center));
   
