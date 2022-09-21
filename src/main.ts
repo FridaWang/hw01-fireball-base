@@ -14,7 +14,7 @@ import Cube from './geometry/cube';
 const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
-  color: [ 255, 255, 0, 255 ], // RGB with alpha
+  color: [ 242, 207, 33, 255 ], // RGB with alpha
   intensity: 2.2,
   freq: 2,
 };
@@ -22,7 +22,7 @@ const controls = {
 let icosphere: Icosphere;
 let square: Square;
 let prevTesselations: number = 5;
-let preGeoColor: number[] = [255, 255, 0, 255];
+let preGeoColor: number[] = [ 242, 207, 33, 255 ];
 let cube: Cube;
 let time: number = 0;
 let prevPerlinScale: number = 1.8;
@@ -100,6 +100,11 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/lambert-frag.glsl')),
   ]);
 
+  const bkg = new ShaderProgram([
+    new Shader(gl.VERTEX_SHADER, require('./shaders/bkg-vert.glsl')),
+    new Shader(gl.FRAGMENT_SHADER, require('./shaders/bkg-frag.glsl')),
+  ]);
+
   lambert.setTexture(0);
 
   // This function will be called every frame
@@ -127,14 +132,19 @@ function main() {
 
     renderer.render(camera, lambert, [
       icosphere,
-      // square,
-      // cube,
     ]);
+
+    renderer.render(camera, bkg, [
+      square,
+    ]);
+    
     stats.end();
 
     // Tell the browser to call `tick` again whenever it renders a new frame
     requestAnimationFrame(tick);
-    lambert.setTime(++time);
+    bkg.setTime(++time);
+
+    lambert.setTime(time);
     lambert.setResolution(vec2.fromValues(window.innerWidth, window.innerHeight));
     lambert.setFreq(prevFreq);
     lambert.setPerlinScale(prevPerlinScale);
