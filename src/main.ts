@@ -16,7 +16,7 @@ const controls = {
   'Load Scene': loadScene, // A function pointer, essentially
   color: [ 242, 206, 33, 255 ], // RGB with alpha
   intensity: 2.2,
-  freq: 2,
+  speed: 2,
 };
 
 let icosphere: Icosphere;
@@ -52,7 +52,7 @@ function main() {
   gui.add(controls, 'Load Scene');
   gui.addColor(controls, 'color');
   gui.add(controls, 'intensity', 1, 10).step(0.2);
-  gui.add(controls, 'freq', 1, 10).step(1);
+  gui.add(controls, 'speed', 1, 10).step(1);
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -123,8 +123,8 @@ function main() {
       preGeoColor = controls.color;
       renderer.setGeoColor(preGeoColor[0], preGeoColor[1], preGeoColor[2], preGeoColor[3]);
     }
-    if (controls.freq != prevFreq) {
-      prevFreq = controls.freq;
+    if (controls.speed != prevFreq) {
+      prevFreq = controls.speed;
     }
     if (controls.intensity != prevPerlinScale) {
       prevPerlinScale = controls.intensity;
